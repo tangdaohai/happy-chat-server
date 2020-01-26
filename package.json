@@ -17,12 +17,26 @@
     "tsc": "ets && tsc -p tsconfig.json",
     "ci": "npm run lint && npm run cov && npm run tsc",
     "autod": "autod",
-    "lint": "eslint . --ext .ts",
-    "clean": "ets clean"
+    "lint": "eslint . --fix --ext .ts",
+    "clean": "ets clean",
+    "commit": "git-cz"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint"
   },
   "dependencies": {
     "egg": "^2.6.1",
     "egg-scripts": "^2.6.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",
@@ -30,6 +44,8 @@
     "@types/supertest": "^2.0.0",
     "autod": "^3.0.1",
     "autod-egg": "^1.1.0",
+    "commitizen": "^4.0.3",
+    "conventional-changelog-cli": "^2.0.31",
     "egg-bin": "^4.11.0",
     "egg-ci": "^1.8.0",
     "egg-mock": "^3.16.0",
@@ -39,6 +55,8 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.1",
+    "lint-staged": "^10.0.2",
     "tslib": "^1.9.0",
     "typescript": "^3.0.0"
   },
