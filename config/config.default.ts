@@ -10,6 +10,16 @@ export default (appInfo: EggAppInfo) => {
   // add your egg config in here
   config.middleware = []
 
+  // mongodb
+  config.mongoose = {
+    url: 'mongodb://localhost:27017',
+    options: {
+      user: 'happychat',
+      pass: '123456',
+      dbName: 'happy-chat'
+    }
+  }
+
   // add your special config in here
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`
