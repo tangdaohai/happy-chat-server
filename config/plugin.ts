@@ -4,6 +4,10 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-mongoose'
   },
+  validate: {
+    enable: true,
+    package: 'egg-validate'
+  },
   session: false,
   jsonp: false,
   i18n: false,

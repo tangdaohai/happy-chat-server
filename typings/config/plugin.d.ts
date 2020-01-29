@@ -11,6 +11,7 @@ import 'egg-logrotator';
 import 'egg-schedule';
 import 'egg-static';
 import 'egg-mongoose';
+import 'egg-validate';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -27,5 +28,6 @@ declare module 'egg' {
     jsonp?: EggPluginItem;
     view?: EggPluginItem;
     mongoose?: EggPluginItem;
+    validate?: EggPluginItem;
   }
 }
