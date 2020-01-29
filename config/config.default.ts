@@ -10,6 +10,13 @@ export default (appInfo: EggAppInfo) => {
   // add your egg config in here
   config.middleware = []
 
+  // 错误信息以 json 格式返回
+  config.onerror = {
+    accepts () {
+      return 'json'
+    }
+  }
+
   // mongodb
   config.mongoose = {
     url: 'mongodb://localhost:27017',
