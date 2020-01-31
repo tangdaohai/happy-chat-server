@@ -1,7 +1,7 @@
 export default {
-  result (status: boolean, content?: object) {
+  result (success: boolean, content?: object) {
     return {
-      status,
+      success,
       content
     }
   }
