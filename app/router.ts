@@ -5,5 +5,6 @@ export default (app: Application) => {
   // 设置前缀
   const v1 = router.prefix('/api/v1')
 
-  v1.post('/user/login', controller.user.signIn)
+  v1.post('/user/sign-in', controller.user.signIn)
+  v1.post('/user/sign-up', controller.user.signUp)
 }
