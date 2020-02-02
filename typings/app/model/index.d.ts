@@ -2,6 +2,7 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportFriend from '../../../app/model/friend';
 import ExportUser from '../../../app/model/user';
 
 declare module 'egg' {
@@ -10,6 +11,7 @@ declare module 'egg' {
   }
 
   interface IModel {
+    Friend: ReturnType<typeof ExportFriend>;
     User: ReturnType<typeof ExportUser>;
   }
 }
