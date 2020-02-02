@@ -5,6 +5,10 @@ import 'egg';
 import ExportUser from '../../../app/model/user';
 
 declare module 'egg' {
+  interface Application {
+    model: IModel;
+  }
+
   interface IModel {
     User: ReturnType<typeof ExportUser>;
   }
