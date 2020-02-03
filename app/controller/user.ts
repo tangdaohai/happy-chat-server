@@ -14,7 +14,7 @@ export default class UserController extends Controller {
     })
     // 上面验证没有通过，抛出异常后 不会走到这里
     const result = await ctx.service.user.signIn(username, password)
-    ctx.body = ctx.result(result)
+    ctx.helper.result(result, '登录成功')
   }
 
   /**
@@ -39,10 +39,10 @@ export default class UserController extends Controller {
     })
     try {
       const result = await ctx.service.user.signUp(username, password, passwordConfirm)
-      ctx.body = ctx.result(result, '注册成功')
+      ctx.helper.result(result, '注册成功')
     } catch (err) {
       console.log(err.message)
-      ctx.body = ctx.result(false, err.message)
+      ctx.helper.result(false, err.message)
     }
   }
 }
