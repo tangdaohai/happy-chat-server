@@ -2,7 +2,6 @@ import { Service } from 'egg'
 export default class User extends Service {
   public async signIn (username: string, password: string) {
     const result = await this.app.model.User.findOne({ username, password })
-    console.log(result.createTime.getTime())
     return !!result
   }
 
