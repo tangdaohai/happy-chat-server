@@ -1,8 +1,9 @@
 import { Controller } from 'egg'
+import { sign } from 'jsonwebtoken'
 
 export default class UserController extends Controller {
   public async signIn () {
-    const { ctx } = this
+    const { ctx, app } = this
     const { username, password } = ctx.request.body
     // 参数验证，如果验证不通过 会 throw error 由 egg 来处理（返回的状态码为 422）
     ctx.validate({
@@ -14,7 +15,15 @@ export default class UserController extends Controller {
     })
     // 上面验证没有通过，抛出异常后 不会走到这里
     const result = await ctx.service.user.signIn(username, password)
-    ctx.helper.result(result, '登录成功')
+    if (result) {
+      // 签发认证 token
+      const token = sign({ _uid: result._id }, app.config.jwt.secretKey, {
+        expiresIn: app.config.jwt.expiresIn
+      })
+      ctx.helper.result(true, { token })
+    } else {
+      ctx.helper.result(false, '登录失败')
+    }
   }
 
   /**
