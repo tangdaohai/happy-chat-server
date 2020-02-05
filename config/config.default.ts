@@ -8,7 +8,7 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1580018754080_4309'
 
   // add your egg config in here
-  config.middleware = []
+  config.middleware = ['jwt']
 
   // 错误信息以 json 格式返回
   config.onerror = {
@@ -29,7 +29,14 @@ export default (appInfo: EggAppInfo) => {
 
   // add your special config in here
   const bizConfig = {
-    sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`
+    sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
+    // 此配置按环境去设置
+    jwt: {
+      secretKey: '',
+      // @FIXME 开发阶段设置为一年
+      expiresIn: 0,
+      ignore: ['/api/v1/user/sign-in', '/api/v1/user/sign-up']
+    }
   }
 
   config.security = {
