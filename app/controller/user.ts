@@ -2,6 +2,11 @@ import { Controller } from 'egg'
 import { sign } from 'jsonwebtoken'
 
 export default class UserController extends Controller {
+  /**
+   * 登录
+   *
+   * @memberof UserController
+   */
   public async signIn () {
     const { ctx, app } = this
     const { username, password } = ctx.request.body
@@ -20,15 +25,14 @@ export default class UserController extends Controller {
       const token = sign({ _uid: result._id }, app.config.jwt.secretKey, {
         expiresIn: app.config.jwt.expiresIn
       })
-      ctx.helper.result(true, { token })
+      ctx.helper.success({ token })
     } else {
-      ctx.helper.result(false, '登录失败')
+      ctx.helper.error('登录失败')
     }
   }
 
   /**
-   *
-   *
+   * 注册
    * @memberof UserController
    */
   public async signUp () {
@@ -47,11 +51,44 @@ export default class UserController extends Controller {
       }
     })
     try {
-      const result = await ctx.service.user.signUp(username, password, passwordConfirm)
-      ctx.helper.result(result, '注册成功')
+      // 没有异常抛出 认为是注册成功了
+      await ctx.service.user.signUp(username, password, passwordConfirm)
+      ctx.helper.success('注册成功')
+    } catch (err) {
+      ctx.helper.error(err.message)
+    }
+  }
+
+  /**
+   * 修改密码
+   *
+   * @memberof UserController
+   */
+  public async changePass () {
+    const { ctx } = this
+    const { oldPassword, newPassword } = ctx.request.body
+    try {
+      await ctx.service.user.changePass(ctx._uid, oldPassword, newPassword)
+      ctx.helper.success('修改成功')
     } catch (err) {
       console.log(err.message)
-      ctx.helper.result(false, err.message)
+      ctx.helper.error(err.message)
+    }
+  }
+
+  /**
+   * 用户详情
+   *
+   * @memberof UserController
+   */
+  public async detail () {
+    const { ctx } = this
+    // 如果未传递 uid 则获取个人详情，否则查询对应 uid 的详情
+    const result = ctx.service.user.detail(ctx._uid, ctx.request.body.friendId)
+    if (result) {
+      ctx.helper.success(result)
+    } else {
+      ctx.helper.error('获取失败')
     }
   }
 }
