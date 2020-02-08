@@ -5,9 +5,13 @@ export default (app: Application) => {
   const Schema = mongoose.Schema
 
   const UserSchema = new Schema<UserModel>({
+    // 账户
     username: { type: String, required: true },
     password: { type: String, required: true },
+    // 个人昵称
+    name: String,
     email: String,
+    // 系统生成的id，改动一次后不可再次修改（类似微信号，用于搜索）
     identity: String,
     sex: Number,
     avatar: String,
@@ -22,6 +26,7 @@ export default (app: Application) => {
 interface UserModel {
   username: string;
   password: string;
+  name: string;
   email: string;
   identity: string;
   sex: number;
