@@ -2,10 +2,12 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportFriend from '../../../app/service/Friend';
 import ExportUser from '../../../app/service/User';
 
 declare module 'egg' {
   interface IService {
+    friend: ExportFriend;
     user: ExportUser;
   }
 }
