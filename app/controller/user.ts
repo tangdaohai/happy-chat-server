@@ -37,13 +37,14 @@ export default class UserController extends Controller {
    */
   public async signUp () {
     const { ctx } = this
-    const { username, password, passwordConfirm } = ctx.request.body
+    const { username, password } = ctx.request.body
     ctx.validate({
       username: 'string',
       password: {
         type: 'string',
         min: 6
       },
+      // 验证 ctx.request.body 中的 passwordConfirm 是否与 password 一致
       passwordConfirm: {
         type: 'password',
         compare: 'password',
@@ -52,7 +53,7 @@ export default class UserController extends Controller {
     })
     try {
       // 没有异常抛出 认为是注册成功了
-      await ctx.service.user.signUp(username, password, passwordConfirm)
+      await ctx.service.user.signUp(username, password)
       ctx.helper.success('注册成功')
     } catch (err) {
       ctx.helper.error(err.message)
@@ -67,6 +68,22 @@ export default class UserController extends Controller {
   public async changePass () {
     const { ctx } = this
     const { oldPassword, newPassword } = ctx.request.body
+    ctx.validate({
+      oldPassword: {
+        type: 'string',
+        min: 6
+      },
+      newPassword: {
+        type: 'string',
+        min: 6
+      },
+      // 验证 ctx.request.body 中的 newPasswordConfirm 是否与 newPassword 一致
+      newPasswordConfirm: {
+        type: 'password',
+        compare: 'newPassword',
+        min: 6
+      }
+    })
     try {
       await ctx.service.user.changePass(ctx._uid, oldPassword, newPassword)
       ctx.helper.success('修改成功')

@@ -52,7 +52,7 @@ export default class User extends Service {
 
   /**
    * 获取用户详情
-   *
+   * @FIXME 查询逻辑需要思考一下是否放到这里
    * @param {string} uid 用户自己的 id
    * @param {string} friendId 朋友的 id
    * @return {UserDetail} 返回用户详情，如果传递了 friendId 会包含 备注与标签属性
@@ -62,9 +62,10 @@ export default class User extends Service {
     const userDocument = await this.app.model.User.findById(uid)
     let result
     if (userDocument) {
-      const { name, sex, identity, avatar, area } = userDocument
-      result = { name, sex, identity, avatar, area }
+      const { name, sex, identityNumber, avatar, area } = userDocument
+      result = { name, sex, identityNumber, avatar, area }
     }
+
     if (friendId && result) {
       const friendDocument = await this.app.model.Friend.findOne({ uid, friendId })
       // 如果有备注显示，否则显示此人的昵称
