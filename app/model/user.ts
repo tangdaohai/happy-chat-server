@@ -12,7 +12,8 @@ export default (app: Application) => {
     name: String,
     email: String,
     // 系统生成的id，改动一次后不可再次修改（类似微信号，用于搜索）
-    identity: String,
+    identityNumber: String,
+    // 0：男 1：女
     sex: Number,
     avatar: String,
     area: String,
@@ -28,7 +29,7 @@ interface UserModel {
   password: string;
   name: string;
   email: string;
-  identity: string;
+  identityNumber: string;
   sex: number;
   avatar: string;
   area: string;
