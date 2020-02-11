@@ -5,7 +5,7 @@ export default class User extends Service {
     return result
   }
 
-  public async signUp (username: string, password: string, passwordConfirm: string) {
+  public async signUp (username: string, password: string) {
     const userModel = this.app.model.User
     // 先查询是否存在
     const existed = await userModel.findOne({ username })
@@ -16,7 +16,6 @@ export default class User extends Service {
     const result = await userModel.create({
       username,
       password,
-      passwordConfirm,
       createTime: now,
       updateTime: now
     })
