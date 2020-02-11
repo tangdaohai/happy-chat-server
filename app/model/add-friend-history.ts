@@ -4,6 +4,11 @@ export default (app: Application) => {
   const mongoose = app.mongoose
   const Schema = mongoose.Schema
 
+  const MsgSchema = new Schema({
+    from: String,
+    msg: String
+  })
+
   const AddFriendHistorySchema = new Schema({
     uid: { type: String, required: true },
     // 发起请求一方的 id
@@ -15,7 +20,8 @@ export default (app: Application) => {
     requestTime: Date,
     reponseTime: Date, // 备注名称
     // 处理结果，0 拒绝 1 接受 2 未响应（初始状态）
-    result: { type: Number, default: 2 }
+    result: { type: Number, default: 2 },
+    msg: [MsgSchema]
   })
 
   return mongoose.model<AddFriendHistoryDocument>('addFriendHistory', AddFriendHistorySchema)
@@ -29,6 +35,10 @@ interface AddFriendHistoryModel {
   requestTime: Date;
   reponseTime: Date;
   result: number;
+  msg: Array<{
+    from: string;
+    msg: string;
+  }>;
 }
 
 type Raw = AddFriendHistoryModel & Document
