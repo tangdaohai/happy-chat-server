@@ -41,11 +41,12 @@ export default class FriendService extends Service {
    * @memberof FriendService
    */
   public async saveAddRequest (uid: string, friendId: string, source: string, reqMsg: string) {
+    // 这里 uid 和 friendId 调换，发起请求方的变为 friend id
     const model = this.app.model
     // 查询当前 uid 对应的 name
-    const User = await model.User.findById(uid)
+    const User = await model.User.findById(friendId)
     // 如果 name 不存在 使用 uid 代替
-    const name = User?.name || uid
+    const name = User?.name || friendId
     // 请求时间
     const now = new Date()
     // 整理请求记录 并返回调用者
