@@ -3,6 +3,7 @@
 
 import 'egg';
 import 'egg-onerror';
+import 'egg-session';
 import 'egg-watcher';
 import 'egg-multipart';
 import 'egg-security';
@@ -12,6 +13,7 @@ import 'egg-schedule';
 import 'egg-static';
 import 'egg-mongoose';
 import 'egg-validate';
+import 'egg-socket.io';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -29,5 +31,6 @@ declare module 'egg' {
     view?: EggPluginItem;
     mongoose?: EggPluginItem;
     validate?: EggPluginItem;
+    io?: EggPluginItem;
   }
 }

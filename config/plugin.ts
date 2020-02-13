@@ -8,16 +8,15 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-validate'
   },
+  io: {
+    enable: true,
+    package: 'egg-socket.io'
+  },
   session: false,
   jsonp: false,
   i18n: false,
   schedule: false,
   view: false
-  // static: true,
-  // nunjucks: {
-  //   enable: true,
-  //   package: 'egg-view-nunjucks',
-  // },
 }
 
 export default plugin
