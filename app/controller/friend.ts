@@ -34,7 +34,14 @@ export default class FriendController extends Controller {
    */
   public async addRequest () {
     const { ctx } = this
-    ctx.logger.info(ctx._uid)
+    const uid = ctx._uid
+    const { friendId, source, reqMsg } = ctx.request.body
+    // 1. 存储添加请求的数据
+    const history = await ctx.service.friend.saveAddRequest(friendId, uid, source, reqMsg)
+    console.log(history)
+    // 2. socket 推送请求
+    // 2.1 判断当前是否在线 如果不在线 储存，等上线后 再推送
+    // 2.2 如果在线 直接推送
     this.ctx.helper.success('发起添加好友请求')
   }
 
