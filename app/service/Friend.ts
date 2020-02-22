@@ -65,4 +65,37 @@ export default class FriendService extends Service {
     await model.AddFriendHistory.create(hsitory)
     return hsitory
   }
+
+  /**
+   * 建立好友关系
+   *
+   * @param {string} uid 用户 ID
+   * @param {string} friendId 请求建立关系的 Id
+   * @memberof FriendService
+   */
+  public async requestAgree (uid: string, friendId: string) {
+    const model = this.app.model
+    const now = Date.now()
+    try {
+      // @TODO 事务处理
+      // 1. 更新好友申请记录
+      model.AddFriendHistory.findOneAndUpdate({
+        uid,
+        friendId
+      }, {
+        reponseTime: now,
+        result: 1
+      })
+
+      // 2. 建立好友关系
+      model.Friend.create({
+        uid,
+        friendId
+      })
+      return true
+    } catch (err) {
+      this.app.logger.error(err)
+      throw new Error('操作失败')
+    }
+  }
 }
